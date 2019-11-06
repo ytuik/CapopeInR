@@ -64,16 +64,18 @@ bestD = 999999999999999999
 nGrupo = ""
 actualD = 0
 for (x in iOrder){
-  venda = 0
+  Venda = 0
+  actualD = 0
   i = 1
   for(y in vGrupos){
     if (x == y){
-      Venda = venda + vVendas[i]
+      Venda = Venda + vVendas[i]
+      print(Venda)
     }
     i = i+1
   }
   actualD = sd(Venda)
-  if(actualD <= bestD){
+  if(actualD < bestD){
     bestD = ActuaD;
     nGrupo = as.character(x)
   }
