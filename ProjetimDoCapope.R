@@ -7,12 +7,15 @@ print(capope)
 
 #Questão 2
 vVenda = capope[,5]
+
 #Calcula a media
 media = mean(vVenda)
 cat("A média é: ",media,"\n")
+
 #Calcula o Desvio padrão
 desviop = sd(vVenda)
 cat("O Desvio padrão é:", desviop,"\n")
+
 #Calcula a Moda
 moda <- function(x){
   uniqv <- unique(x) #uniqv armazena todos os valores sem repetição
@@ -64,22 +67,55 @@ bestD = 999999999999999999
 nGrupo = ""
 actualD = 0
 for (x in iOrder){
-  Venda = 0
+  Venda = c()
   actualD = 0
   i = 1
   for(y in vGrupos){
     if (x == y){
-      Venda = Venda + vVendas[i]
+      Venda = c(Venda, vVendas[i])
       print(Venda)
     }
     i = i+1
   }
   actualD = sd(Venda)
+  if (is.na(actualD)){
+    actualD = 0
+  }
   if(actualD < bestD){
-    bestD = ActuaD;
+    bestD = actualD;
     nGrupo = as.character(x)
   }
 }
 return(nGrupo)
 }
 resultado = oMelhorGrupoLeva(vGrupos,vVendas)
+print(resultado)
+#tbm ta bugada essa merda
+
+
+#Questão 5
+vGrupos = capope[,1]
+vAlbum = capope[,2]
+vVendas = capope[,5]
+
+hitou <- function(grupo,album,venda,ano){
+  iOrder = sort((grupo))
+  gHit = ""
+  aHit = ""
+  bSale = 0
+  for (x in iOrder){
+    i = 1
+    Venda = venda[i]
+    if(venda > bSale){
+      bSale = venda
+      gHit = as.character(grupo[i])
+      aHit = as.character(album[i])
+    }
+  }
+  saida = c(gHit, aHit)
+  return(saida)
+}
+resultado1 = hitou(vGrupos,vAlbum,vVenda,"2018")
+print(resultado1)
+  
+
