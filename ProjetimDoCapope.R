@@ -1,28 +1,28 @@
 #capope[,1] = Grupos, capope[,2] = N album, capope[,3] = anos, capope[,4] = empresas
 #capope[,5] = vendas
 
-#Questão 1
+#Quest?o 1
 capope = read.csv("Capope.csv", header = TRUE)
 print(capope)
 
 #######################################################################################################
-#Questão 2
+#Quest?o 2
 vVenda = capope[,5]
 
 #Calcula a media
 media = mean(vVenda)
-cat("A média é: ",media,"\n")
+cat("A m?dia ?: ",media,"\n")
 
-#Calcula o Desvio padrão
+#Calcula o Desvio padr?o
 desviop = sd(vVenda)
-cat("O Desvio padrão é:", desviop,"\n")
+cat("O Desvio padr?o ?:", desviop,"\n")
 
 #Calcula a Moda
 moda <- function(x){
-  uniqv <- unique(x) #uniqv armazena todos os valores sem repetição
+  uniqv <- unique(x) #uniqv armazena todos os valores sem repeti??o
   vrau = which.max(tabulate(match(x,uniqv, nomatch = 0))) #match compara os numeros e retorna um vetor quando encontra um igual, armazena numa tabela e depois retorna o maior vetor nessa tabela
     if (vrau <= 1){
-      return("Não existe moda pois todos os numeros são diferentes")
+      return("N?o existe moda pois todos os numeros s?o diferentes")
     }else{
       return(uniqv[vrau])
     }
@@ -30,15 +30,15 @@ moda <- function(x){
 }
   
 modaV = moda(vVenda)
-cat("A moda é:", modaV, "\n")
+cat("A moda ?:", modaV, "\n")
 
 
 #######################################################################################################
 
-#Questão 3
+#Quest?o 3
 vGrupos = capope[,1]
 vAno = capope[,3]
-ComebackVemForte <- function(grupo,ano,parametro){ #Metodo para pegar os grupos que lançaram um album no ano especificado
+ComebackVemForte <- function(grupo,ano,parametro){ #Metodo para pegar os grupos que lan?aram um album no ano especificado
   contador = 1
   vetor = c()
   for (x in ano){
@@ -52,7 +52,7 @@ ComebackVemForte <- function(grupo,ano,parametro){ #Metodo para pegar os grupos 
 }
 Gin2018 = ComebackVemForte(vGrupos,vAno,"2018")
 Gin2019 = ComebackVemForte(vGrupos,vAno,"2019")
-a = (match(Gin2018,Gin2019)) #Comparação para ver se algum grupo se repete nos dois anos
+a = (match(Gin2018,Gin2019)) #Compara??o para ver se algum grupo se repete nos dois anos
 resultado = c()
 for(x in a){
   resultado = c(resultado, as.character(Gin2019[x])) 
@@ -64,11 +64,11 @@ for(x in resultado){
   sResul = c(sResul,as.character(resultado[contador]),",")
   contador = contador + 1;
 }
-cat("Os seguintes grupos tiveram albuns lançados nos dois anos :",sResul,"\n")
+cat("Os seguintes grupos tiveram albuns lan?ados nos dois anos :",sResul,"\n")
 
 #######################################################################################################
 
-#Questão 4
+#Quest?o 4
 vGrupos = capope[,1]
 vVendas = capope[,5]
 
@@ -113,12 +113,12 @@ for (x in duplicado){
 return(nGrupo)
 }
 resultado = oMelhorGrupoLeva(vGrupos,vVendas)
-cat("O grupo com o menor desvio padrão nas vendas foi o: ",resultado)
+cat("O grupo com o menor desvio padr?o nas vendas foi o: ",resultado)
 
 
 #######################################################################################################
 
-#Questão 5
+#Quest?o 5
 vGrupos = capope[,1]
 vAlbum = capope[,2]
 vAno = capope[,3]
@@ -168,6 +168,53 @@ resultado2 = flopou(vGrupos,vAlbum,vVenda,vAno,x)
 cat("No ano ",x,"o album que mais vendeu foi '",resultado1[2],"' do grupo ",resultado1[1])
 cat("No ano ",x,"o album que menos vendeu foi '",resultado2[2],"' do grupo ",resultado2[1])
 
-#######################################################################################################
+#QuestÃ£o 6
+
+artistas = capope[,1]
+ano = capope[,3]
+threshold <- 1
+a = Filter(function (elem) length(which(artistas == elem)) <= threshold, artistas)
+
+printarAno <- function(artistas, ano) {
+  for (x in a) {
+    contador = 1
+    for (y in artistas) {
+      if (x == y) {
+        cat(x, ":" ,ano[contador], "\n")
+      }
+      contador = contador + 1
+    }
+  }
+}
+resultado = printarAno(artistas, ano)
+
+# QuestÃ£o 7
+empresass = capope[,4]
+ArtistasSemRepetir <- data.frame(artistas, empresass)
+ArtistasSemRepetir = ArtistasSemRepetir[!duplicated(ArtistasSemRepetir$artistas),]
+eUnicas= unique(empresass)
+n <- length(eUnicas)
+Empresa <- numeric(n)
+Quantidade <- numeric(n)
+i = 1
+
+for (x in eUnicas){
+  count = 0
+  for(y in ArtistasSemRepetir[,2]){
+    if (x == y) {
+      count = count + 1
+    }
+  }
+  Empresa[i] <- x
+  Quantidade[i] <- count
+  i = i + 1
+}
+
+df1 <- data.frame(Empresa, Quantidade)
+df1Ordered = df1[order(df1$Quantidade, decreasing=TRUE),]
+print(df1Ordered)
+
+
+
 
 
