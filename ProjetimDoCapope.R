@@ -234,13 +234,13 @@ famosinhos <- function(artistas){
   }
     return (grupo)
 }
+
 vVenda = capope[,5]
 vGrupo = capope[,1]
-vetorFamosinhos = famosinhos(vGrupo)
-print(vetorFamosinhos)
-valores = c()
+Artistas = famosinhos(vGrupo)
+Valores = c()
 count2 = 1
-for (x in vetorFamosinhos) {
+for (x in Artistas) {
   count = 1
   valor = 0
   for (y in vGrupo) {
@@ -249,11 +249,11 @@ for (x in vetorFamosinhos) {
     }
     count = count + 1
   }
-  valores[count2] = valor
+  Valores[count2] = valor
   count2 = count2 + 1
 }
-dfFamosinhos = data.frame(vetorFamosinhos, valores)
-dfFamosinhosOrdenado = dfFamosinhos[order(dfFamosinhos$valores, decreasing=TRUE),]
+dfFamosinhos = data.frame(Artistas, Valores)
+dfFamosinhosOrdenado = dfFamosinhos[order(dfFamosinhos$Valores, decreasing=TRUE),]
 print(dfFamosinhosOrdenado)
 
 
