@@ -1,28 +1,28 @@
 #capope[,1] = Grupos, capope[,2] = N album, capope[,3] = anos, capope[,4] = empresas
 #capope[,5] = vendas
 
-#Quest?o 1
+#Questao 1
 capope = read.csv("Capope.csv", header = TRUE)
 print(capope)
 
 #######################################################################################################
-#Quest?o 2
+#Questao 2
 vVenda = capope[,5]
 
 #Calcula a media
 media = mean(vVenda)
-cat("A m?dia ?: ",media,"\n")
+cat("A media ?: ",media,"\n")
 
-#Calcula o Desvio padr?o
+#Calcula o Desvio padrao
 desviop = sd(vVenda)
-cat("O Desvio padr?o ?:", desviop,"\n")
+cat("O Desvio padrao ?:", desviop,"\n")
 
 #Calcula a Moda
 moda <- function(x){
-  uniqv <- unique(x) #uniqv armazena todos os valores sem repeti??o
+  uniqv <- unique(x) #uniqv armazena todos os valores sem repeticao
   vrau = which.max(tabulate(match(x,uniqv, nomatch = 0))) #match compara os numeros e retorna um vetor quando encontra um igual, armazena numa tabela e depois retorna o maior vetor nessa tabela
     if (vrau <= 1){
-      return("N?o existe moda pois todos os numeros s?o diferentes")
+      return("Nao existe moda pois todos os numeros sao diferentes")
     }else{
       return(uniqv[vrau])
     }
@@ -30,12 +30,12 @@ moda <- function(x){
 }
   
 modaV = moda(vVenda)
-cat("A moda ?:", modaV, "\n")
+cat("A moda e:", modaV, "\n")
 
 
 #######################################################################################################
 
-#Quest?o 3
+#Questao 3
 vGrupos = capope[,1]
 vAno = capope[,3]
 ComebackVemForte <- function(grupo,ano,parametro){ #Metodo para pegar os grupos que lan?aram um album no ano especificado
@@ -52,7 +52,7 @@ ComebackVemForte <- function(grupo,ano,parametro){ #Metodo para pegar os grupos 
 }
 Gin2018 = ComebackVemForte(vGrupos,vAno,"2018")
 Gin2019 = ComebackVemForte(vGrupos,vAno,"2019")
-a = (match(Gin2018,Gin2019)) #Compara??o para ver se algum grupo se repete nos dois anos
+a = (match(Gin2018,Gin2019)) #Comparacao para ver se algum grupo se repete nos dois anos
 resultado = c()
 for(x in a){
   resultado = c(resultado, as.character(Gin2019[x])) 
@@ -64,7 +64,7 @@ for(x in resultado){
   sResul = c(sResul,as.character(resultado[contador]),",")
   contador = contador + 1;
 }
-cat("Os seguintes grupos tiveram albuns lan?ados nos dois anos :",sResul,"\n")
+cat("Os seguintes grupos tiveram albuns lancados nos dois anos :",sResul,"\n")
 
 #######################################################################################################
 
@@ -257,4 +257,42 @@ dfFamosinhosOrdenado = dfFamosinhos[order(dfFamosinhos$Valores, decreasing=TRUE)
 print(dfFamosinhosOrdenado)
 
 
+#############################################################################################
+#Questão 10
 
+
+ComebackDoWaveform <-function(Empresa){
+vEmpresa = capope[,4]
+  QAlbum2018 = 0
+  QAlbum2019 = 0
+  contador = 1
+  counter = 0
+  OdeioHistogramas = c()
+  for (i in vEmpresa){
+    if(i == Empresa && ano[contador] == "2018"){
+      QAlbum2018 = QAlbum2018 + 1
+    }
+    else if(i == Empresa && ano[contador] == "2019"){
+      QAlbum2019 = QAlbum2019 + 1
+    }
+    contador = contador+1
+  }
+  total = c(QAlbum2018 , QAlbum2019)
+  print(total)
+  
+  for(x in total){#loop para fazer o vetor que o metodo hist vai entender
+    counter = counter + 1
+    if (total[counter] != 0) {
+      for(y in 1:total[counter]){
+        OdeioHistogramas = c(OdeioHistogramas,counter)
+      }
+    }
+  }
+  print(OdeioHistogramas)
+  
+  
+   vamo<- hist(OdeioHistogramas,breaks = 2, main = Empresa,xlab = "Ano", col = "darkslategray1", ylab = "Qtd de Album")
+  return(vamo)
+}
+
+print(ComebackDoWaveform("SM"))
