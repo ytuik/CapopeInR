@@ -214,7 +214,47 @@ df1 <- data.frame(Empresa, Quantidade)
 df1Ordered = df1[order(df1$Quantidade, decreasing=TRUE),]
 print(df1Ordered)
 
-
+# Questão 8
+famosinhos <- function(artistas){
+  frequencia = (tabulate(match(artistas,unique(artistas), nomatch = 0)))
+  var = (max(frequencia))
+  vetorPosicao = c()
+  posicao = 1
+  aux = 1
+  for(x in frequencia){
+    if(x == var){
+      vetorPosicao[aux] = posicao
+      aux = aux + 1
+    }
+    posicao = posicao + 1
+  }
+  grupo = c()
+  for (x in vetorPosicao){
+    grupo = c(grupo, as.character(artistas[x]))
+  }
+    return (grupo)
+}
+vVenda = capope[,5]
+vGrupo = capope[,1]
+vetorFamosinhos = famosinhos(vGrupo)
+print(vetorFamosinhos)
+valores = c()
+count2 = 1
+for (x in vetorFamosinhos) {
+  count = 1
+  valor = 0
+  for (y in vGrupo) {
+    if (x == y) {
+      valor = valor + vVenda[count]
+    }
+    count = count + 1
+  }
+  valores[count2] = valor
+  count2 = count2 + 1
+}
+dfFamosinhos = data.frame(vetorFamosinhos, valores)
+dfFamosinhosOrdenado = dfFamosinhos[order(dfFamosinhos$valores, decreasing=TRUE),]
+print(dfFamosinhosOrdenado)
 
 
 
