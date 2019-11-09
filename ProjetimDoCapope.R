@@ -256,9 +256,52 @@ dfFamosinhos = data.frame(Artistas, Valores)
 dfFamosinhosOrdenado = dfFamosinhos[order(dfFamosinhos$Valores, decreasing=TRUE),]
 print(dfFamosinhosOrdenado)
 
+#Questao 9
+vAlbuns = capope[,2]
+maisVendidosPorEmpresa <- function(vEmpresa, vVendas) {
+  vAlbunsMaisVendidos = c()
+  contadorNovoVetor = 1
+  for (x in vEmpresa) {
+    contadorEmpresa = 1
+    contadorVenda = 1
+    posicaoMaiorVenda = 1
+    maiorVenda = 0
+    for (y in vVendas) {
+      if (capope[,4][contadorEmpresa] == x && vVendas[contadorVenda] > maiorVenda) {
+        posicaoMaiorVenda = contadorVenda
+        maiorVenda = vVendas[contadorVenda]
+        contadorEmpresa = contadorEmpresa + 1
+        contadorVenda = contadorVenda + 1
+      } else {
+        contadorEmpresa = contadorEmpresa + 1
+        contadorVenda = contadorVenda + 1
+      }
+    }
+    vPosicaoMaisVendidos[contadorNovoVetor] = posicaoMaiorVenda
+    vAlbunsMaisVendidos = c(vAlbunsMaisVendidos, as.character(vAlbuns[posicaoMaiorVenda]))
+    contadorNovoVetor = contadorNovoVetor + 1
+  }
+  return(vAlbunsMaisVendidos)
+}
+vEmpresa = capope[,4]
+vEmpresa = sort(vEmpresa, decreasing = FALSE)
+vEmpresa = unique(vEmpresa)
+vVendas = capope[,5]
+vAlbunsMaisVendidos = maisVendidosPorEmpresa(vEmpresa, vVendas)
+print(vAlbunsMaisVendidos)
+print(vPosicaoMaisVendidos)
 
+
+#Pegandos os artistas
+artistas = capope[,1]
+Artistas = c()
+contadorVArtistas = 1
+for (posicao in vPosicaoMaisVendidos) {
+  Artistas[contadorVArtistas] = artistas[posicao]
+  contadorVArtistas = contadorVArtistas + 1
+}
 #############################################################################################
-#Questão 10
+#Quest?o 10
 
 
 ComebackDoWaveform <-function(Empresa){
