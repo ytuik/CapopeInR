@@ -283,23 +283,34 @@ maisVendidosPorEmpresa <- function(vEmpresa, vVendas) {
   }
   return(vAlbunsMaisVendidos)
 }
-vEmpresa = capope[,4]
-vEmpresa = sort(vEmpresa, decreasing = FALSE)
-vEmpresa = unique(vEmpresa)
+Empresa = capope[,4]
+Empresa = sort(vEmpresa, decreasing = FALSE)
+Empresa = unique(vEmpresa)
 vVendas = capope[,5]
-vAlbunsMaisVendidos = maisVendidosPorEmpresa(vEmpresa, vVendas)
-print(vAlbunsMaisVendidos)
-print(vPosicaoMaisVendidos)
+Albuns = maisVendidosPorEmpresa(Empresa, vVendas)
 
-
-#Pegandos os artistas
-artistas = capope[,1]
-Artistas = c()
+#Pegandos os artistas e albuns
+Artista = c()
+Valor = c()
 contadorVArtistas = 1
-for (posicao in vPosicaoMaisVendidos) {
-  Artistas[contadorVArtistas] = artistas[posicao]
-  contadorVArtistas = contadorVArtistas + 1
+contadorPosicao = 1
+for (x in Albuns) {
+  for (y in capope[,2]) {
+    if (x == y) {
+      Artista = c(Artista, as.character(capope[,1][contadorVArtistas]))
+      Valor[contadorPosicao] = capope[,5][contadorVArtistas]
+    }
+    contadorVArtistas = contadorVArtistas + 1
+  }
+  contadorVArtistas = 1
+  contadorPosicao = contadorPosicao + 1
 }
+
+#Fazendo o DataFrame
+dfAlbunsMaisVendidos = data.frame(Empresa, Artista, Albuns, Valor)
+dfAlbunsMaisVendidosOrdenado = dfAlbunsMaisVendidos[order(dfAlbunsMaisVendidos$Valor, decreasing = TRUE),]
+print(dfAlbunsMaisVendidosOrdenado)
+
 #############################################################################################
 #Quest?o 10
 
